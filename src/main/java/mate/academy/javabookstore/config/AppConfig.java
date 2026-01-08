@@ -18,7 +18,7 @@ public class AppConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
 
-        sessionFactory.setPackagesToScan("mate.academy.javabookstore");
+        sessionFactory.setPackagesToScan("mate.academy.javabookstore.models");
 
         Properties properties = new Properties();
         properties.setProperty("spring.jpa.show-sql", env.getProperty("spring.jpa.show-sql"));
