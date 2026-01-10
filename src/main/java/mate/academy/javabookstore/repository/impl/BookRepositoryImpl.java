@@ -1,10 +1,10 @@
-package mate.academy.javabookstore.repositories.impl;
+package mate.academy.javabookstore.repository.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.javabookstore.exceptions.DataProcessingException;
-import mate.academy.javabookstore.models.Book;
-import mate.academy.javabookstore.repositories.BookRepository;
+import mate.academy.javabookstore.exception.DataProcessingException;
+import mate.academy.javabookstore.model.Book;
+import mate.academy.javabookstore.repository.BookRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
