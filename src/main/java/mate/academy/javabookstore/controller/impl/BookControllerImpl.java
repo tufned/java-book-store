@@ -1,11 +1,11 @@
-package mate.academy.javabookstore.controllers.impl;
+package mate.academy.javabookstore.controller.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.javabookstore.controllers.BookController;
+import mate.academy.javabookstore.controller.BookController;
 import mate.academy.javabookstore.dto.BookDto;
 import mate.academy.javabookstore.dto.CreateBookRequestDto;
-import mate.academy.javabookstore.services.BookService;
+import mate.academy.javabookstore.service.BookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
