@@ -15,8 +15,7 @@ public record CreateBookRequestDto(
         @Size(min = BookConstants.MIN_AUTHOR_SIZE, max = BookConstants.MAX_AUTHOR_SIZE)
         String author,
         @NotNull
-        @Size(min = BookConstants.ISBN_SIZE, max = BookConstants.ISBN_SIZE)
-        @Pattern(regexp = BookConstants.ISBN_REGEX)
+        @Pattern(regexp = BookConstants.ISBN_REGEX, message = BookConstants.ISBN_REGEX_ERROR_MSG)
         String isbn,
         @NotNull
         @Min(0)

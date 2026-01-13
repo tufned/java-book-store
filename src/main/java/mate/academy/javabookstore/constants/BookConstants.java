@@ -10,6 +10,7 @@ public final class BookConstants {
     public static final int MIN_AUTHOR_SIZE = 3;
     public static final int MAX_AUTHOR_SIZE = 30;
 
-    public static final int ISBN_SIZE = 14;
     public static final String ISBN_REGEX = "\\d{3}+-\\d{10}+";
+    public static final String ISBN_REGEX_ERROR_MSG =
+            "Should contain 14 symbols and be in the pattern 000-0000000000";
 }
