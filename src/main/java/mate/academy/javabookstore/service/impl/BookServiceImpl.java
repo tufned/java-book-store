@@ -43,8 +43,8 @@ public class BookServiceImpl implements BookService {
 
         bookMapper.updateModelFromDto(createBookRequestDto, book);
 
-        Book updatedBook = bookRepository.save(book);
-        return bookMapper.toDto(updatedBook);
+        bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override
