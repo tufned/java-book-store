@@ -1,8 +1,8 @@
 package mate.academy.javabookstore.mapper;
 
 import mate.academy.javabookstore.config.MapperConfig;
-import mate.academy.javabookstore.dto.BookDto;
-import mate.academy.javabookstore.dto.CreateBookRequestDto;
+import mate.academy.javabookstore.dto.book.BookDto;
+import mate.academy.javabookstore.dto.book.CreateBookRequestDto;
 import mate.academy.javabookstore.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

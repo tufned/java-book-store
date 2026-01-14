@@ -2,12 +2,14 @@ package mate.academy.javabookstore.service.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.javabookstore.dto.BookDto;
-import mate.academy.javabookstore.dto.CreateBookRequestDto;
+import mate.academy.javabookstore.dto.book.BookDto;
+import mate.academy.javabookstore.dto.book.BookSearchParametersDto;
+import mate.academy.javabookstore.dto.book.CreateBookRequestDto;
 import mate.academy.javabookstore.exception.EntityNotFoundException;
 import mate.academy.javabookstore.mapper.BookMapper;
 import mate.academy.javabookstore.model.Book;
-import mate.academy.javabookstore.repository.BookRepository;
+import mate.academy.javabookstore.repository.book.BookRepository;
+import mate.academy.javabookstore.repository.book.BookSpecificationBuilder;
 import mate.academy.javabookstore.service.BookService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
@@ -26,7 +29,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll() {
-        return bookRepository.findAll().stream().map(bookMapper::toDto).toList();
+        return bookRepository.findAll()
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 
     @Override
@@ -50,5 +56,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookRepository.findAll(bookSpecificationBuilder.build(searchParameters)).stream()
+                .map(bookMapper::toDto).toList();
     }
 }
