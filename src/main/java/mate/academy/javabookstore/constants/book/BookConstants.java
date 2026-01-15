@@ -1,4 +1,4 @@
-package mate.academy.javabookstore.constants;
+package mate.academy.javabookstore.constants.book;
 
 import lombok.NoArgsConstructor;
 
