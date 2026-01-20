@@ -56,4 +56,11 @@ public class CustomGlobalExceptionHandler {
         }
         return err.getDefaultMessage();
     }
+
+    @ExceptionHandler(RegistrationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorResponseDto> handleRegistrationException(
+            RegistrationException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+    }
 }
