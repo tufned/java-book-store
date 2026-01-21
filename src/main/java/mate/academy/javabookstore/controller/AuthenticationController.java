@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.javabookstore.dto.user.UserDto;
 import mate.academy.javabookstore.dto.user.UserRegistrationRequestDto;
 import mate.academy.javabookstore.exception.RegistrationException;
-import mate.academy.javabookstore.service.AuthenticationService;
+import mate.academy.javabookstore.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @Tag(name = "Authentication", description = "Authentication endpoints")
 public class AuthenticationController {
-    private final AuthenticationService authenticationService;
+    private final UserService authenticationService;
 
     @PostMapping("/registration")
     @Operation(summary = "Register a user",
