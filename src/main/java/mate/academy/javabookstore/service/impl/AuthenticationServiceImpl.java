@@ -19,7 +19,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public UserDto register(UserRegistrationRequestDto requestDto) throws RegistrationException {
         if (userRepository.existsByEmail(requestDto.email())) {
-            throw new RegistrationException("Can't register user");
+            throw new RegistrationException("User already registered");
         }
         User user = userMapper.toModel(requestDto);
         userRepository.save(user);

@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import mate.academy.javabookstore.constants.user.UserConstants;
+import mate.academy.javabookstore.validate.FieldMatch;
 
+@FieldMatch(first = "password", second = "repeatPassword", message = "Passwords don't match")
 public record UserRegistrationRequestDto(
         @NotBlank
         @Email
