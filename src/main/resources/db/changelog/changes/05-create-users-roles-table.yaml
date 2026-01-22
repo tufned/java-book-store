@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: Denys Funderat
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_roles_users
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_roles_roles
+                    references: roles(id)
+                    nullable: false
+        - addPrimaryKey:
+            tableName: users_roles
+            columnNames: user_id, role_id
+            constraintName: pk_users_roles
