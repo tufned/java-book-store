@@ -56,4 +56,10 @@ public class CustomGlobalExceptionHandler {
         }
         return err.getDefaultMessage();
     }
+
+    @ExceptionHandler(RegistrationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorResponseDto> handleRegistrationException(RegistrationException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+    }
 }
