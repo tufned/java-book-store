@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8.1
+      author: Denys Funderat
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "johndoe@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$12$krjSIJJI9IpiUUI03FxojufzOJpTYxjJOsQl9ckUoXh1/TDU8SCgy"
+              - column:
+                  name: first_name
+                  value: "John"
+              - column:
+                  name: last_name
+                  value: "Doe"
+              - column:
+                  name: shipping_address
+                  value: "Kyiv, Test street 123a"
+  - changeSet:
+      id: 8.2
+      author: Denys Funderat
+      changes:
+        - sql:
+            sql: "INSERT INTO users_roles (user_id, role_id) 
+                  SELECT u.id, (SELECT r.id FROM roles r WHERE r.name = 'USER')
+                  FROM users u
+                  WHERE u.email = 'johndoe@gmail.com'"

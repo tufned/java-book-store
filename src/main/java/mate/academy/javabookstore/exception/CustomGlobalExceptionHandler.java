@@ -7,6 +7,7 @@ import mate.academy.javabookstore.dto.response.ErrorResponseDto;
 import mate.academy.javabookstore.utils.ResponseEntityProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,8 +46,12 @@ public class CustomGlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseEntity<ErrorResponseDto> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        List<String> errors =
-                e.getBindingResult().getAllErrors().stream().map(this::getErrorMessage).toList();
+        List<String> errors = e
+                .getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(this::getErrorMessage)
+                .toList();
         return responseEntityProvider.getResponseEntity(errors, HttpStatus.NOT_ACCEPTABLE);
     }
 
@@ -61,5 +66,12 @@ public class CustomGlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponseDto> handleRegistrationException(RegistrationException e) {
         return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorResponseDto> handleAuthorizationDeniedException(
+            AuthorizationDeniedException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
     }
 }

@@ -1,9 +1,9 @@
 package mate.academy.javabookstore.security;
 
 import java.util.Collection;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.javabookstore.model.User;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +13,9 @@ public class SecurityUserAdapter implements UserDetails {
     private final User user;
 
     @Override
+    @NonNull
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return user.getRoles();
     }
 
     @Override
@@ -23,6 +24,7 @@ public class SecurityUserAdapter implements UserDetails {
     }
 
     @Override
+    @NonNull
     public String getUsername() {
         return user.getEmail();
     }
