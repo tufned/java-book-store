@@ -8,7 +8,6 @@ import mate.academy.javabookstore.dto.user.UserDto;
 import mate.academy.javabookstore.dto.user.UserRegistrationRequestDto;
 import mate.academy.javabookstore.exception.RegistrationException;
 import mate.academy.javabookstore.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class AuthenticationController {
     @PostMapping("/registration")
     @Operation(summary = "Register a user",
                description = "Creates a user based on request body and returns UserDto")
-    @PreAuthorize("hasRole('USER')")
     public UserDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return authenticationService.register(requestDto);
