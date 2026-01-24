@@ -12,7 +12,7 @@ import mate.academy.javabookstore.model.User;
 import mate.academy.javabookstore.repository.role.RoleRepository;
 import mate.academy.javabookstore.repository.user.UserRepository;
 import mate.academy.javabookstore.service.UserService;
-import mate.academy.javabookstore.utils.PasswordEncoderUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoderUtil passwordEncoderUtil;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository
                 .findByName(Role.RoleName.USER)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find user role"));
-        passwordEncoderUtil.encodePassword(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(role));
         userRepository.save(user);
         return userMapper.toDto(user);
