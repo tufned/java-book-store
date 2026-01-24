@@ -2,6 +2,7 @@ package mate.academy.javabookstore.exception;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import mate.academy.javabookstore.constants.AppConstants;
 import mate.academy.javabookstore.dto.response.ErrorResponseDto;
 import mate.academy.javabookstore.utils.ResponseEntityProvider;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Log4j2
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class CustomGlobalExceptionHandler {
@@ -22,7 +24,8 @@ public class CustomGlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponseDto> handleAllExceptions() {
+    public ResponseEntity<ErrorResponseDto> handleAllExceptions(Exception e) {
+        log.error(e);
         return responseEntityProvider.getResponseEntity(AppConstants.DEFAULT_ERROR_MSG,
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -73,5 +76,12 @@ public class CustomGlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleAuthorizationDeniedException(
             AuthorizationDeniedException e) {
         return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponseDto> handleAuthenticationException(
+            AuthenticationException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }
