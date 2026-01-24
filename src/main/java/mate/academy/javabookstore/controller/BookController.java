@@ -48,15 +48,15 @@ public class BookController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @Operation(summary = "Create book", description = """
             Creates a new book based on the provided request\s
-            body and returns it with generated id""")
+            body and returns it with generated id. Only for admins.""")
     @PreAuthorize("hasRole('ADMIN')")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update book",
-               description = "Updates a book based on the provided request body and returns it.")
+    @Operation(summary = "Update book", description = """
+            Updates a book based on the provided request body and returns it. Only for admins.""")
     @PreAuthorize("hasRole('ADMIN')")
     public BookDto updateBook(@PathVariable Long id,
                               @RequestBody @Valid CreateBookRequestDto bookDto) {
@@ -67,9 +67,9 @@ public class BookController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete book by id",
-               description = "Deletes the book based on the provided id.")
+               description = "Deletes the book based on the provided id. Only for admins.")
     public void deleteBook(@PathVariable Long id) {
-        bookService.delete(id);
+        bookService.deleteById(id);
     }
 
     @GetMapping("/search")
