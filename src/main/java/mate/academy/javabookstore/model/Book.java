@@ -26,7 +26,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "books")
 @SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
-public class Book {
+public class Book extends SoftDeletable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -56,7 +56,4 @@ public class Book {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Category> categories = new HashSet<>();
-
-    @Column(nullable = false)
-    private boolean isDeleted = false;
 }
