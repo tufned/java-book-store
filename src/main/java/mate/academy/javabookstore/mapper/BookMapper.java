@@ -9,6 +9,7 @@ import mate.academy.javabookstore.model.Book;
 import mate.academy.javabookstore.model.Category;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
@@ -28,9 +29,17 @@ public interface BookMapper {
         bookDto.setCategoryIds(ids);
     }
 
+    @Mapping(source = "categoryIds", target = "categories")
     Book toModel(CreateBookRequestDto bookDto);
 
+    @Mapping(source = "categoryIds", target = "categories")
     void updateModelFromDto(CreateBookRequestDto bookDto, @MappingTarget Book book);
+
+    default Category toCategoryFromId(Long id) {
+        Category category = new Category();
+        category.setId(id);
+        return category;
+    }
 
     BookWithoutCategoryIds toDtoWithoutCategories(Book model);
 }
