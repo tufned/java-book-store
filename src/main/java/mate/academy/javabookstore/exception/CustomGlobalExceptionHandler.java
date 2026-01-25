@@ -74,4 +74,11 @@ public class CustomGlobalExceptionHandler {
             AuthorizationDeniedException e) {
         return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponseDto> handleAuthenticationException(
+            AuthenticationException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }
