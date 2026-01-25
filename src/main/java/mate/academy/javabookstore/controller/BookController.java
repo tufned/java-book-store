@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,13 +49,15 @@ public class BookController {
     @Operation(summary = "Create book", description = """
             Creates a new book based on the provided request\s
             body and returns it with generated id""")
+    @PreAuthorize("hasRole('ADMIN')")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Create book",
+    @Operation(summary = "Update book",
                description = "Updates a book based on the provided request body and returns it.")
+    @PreAuthorize("hasRole('ADMIN')")
     public BookDto updateBook(@PathVariable Long id,
                               @RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.update(id, bookDto);
@@ -62,6 +65,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete book by id",
                description = "Deletes the book based on the provided id.")
     public void deleteBook(@PathVariable Long id) {
