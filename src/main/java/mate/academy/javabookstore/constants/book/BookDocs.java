@@ -25,4 +25,6 @@ public final class BookDocs {
 
     public static final String COVER_IMAGE_DESC = "Cover image url";
     public static final String COVER_IMAGE_EX = "https://example.com/cover-image.jpg";
+
+    public static final String CATEGORY_IDS_EX = "[1, 21, 7]";
 }

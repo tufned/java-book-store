@@ -7,6 +7,7 @@ import mate.academy.javabookstore.dto.response.ErrorResponseDto;
 import mate.academy.javabookstore.utils.ResponseEntityProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -79,6 +80,13 @@ public class CustomGlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponseDto> handleAuthenticationException(
             AuthenticationException e) {
+        return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponseDto> handleBadCredentialsException(
+            BadCredentialsException e) {
         return responseEntityProvider.getResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }

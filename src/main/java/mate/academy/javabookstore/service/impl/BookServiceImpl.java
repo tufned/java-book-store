@@ -3,6 +3,7 @@ package mate.academy.javabookstore.service.impl;
 import lombok.RequiredArgsConstructor;
 import mate.academy.javabookstore.dto.book.BookDto;
 import mate.academy.javabookstore.dto.book.BookSearchParametersDto;
+import mate.academy.javabookstore.dto.book.BookWithoutCategoryIds;
 import mate.academy.javabookstore.dto.book.CreateBookRequestDto;
 import mate.academy.javabookstore.exception.EntityNotFoundException;
 import mate.academy.javabookstore.mapper.BookMapper;
@@ -30,19 +31,23 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<BookDto> findAll(Pageable pageable) {
-        return bookRepository.findAll(pageable).map(bookMapper::toDto);
+        return bookRepository
+                .findAll(pageable)
+                .map(bookMapper::toDto);
     }
 
     @Override
     public BookDto findById(Long id) {
-        Book book = bookRepository.findById(id)
+        Book book = bookRepository
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find book with id: " + id));
         return bookMapper.toDto(book);
     }
 
     @Override
     public BookDto update(Long id, CreateBookRequestDto createBookRequestDto) {
-        Book book = bookRepository.findById(id)
+        Book book = bookRepository
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find book by id: " + id));
 
         bookMapper.updateModelFromDto(createBookRequestDto, book);
@@ -52,13 +57,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
 
     @Override
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
-        return bookRepository.findAll(bookSpecificationBuilder.build(searchParameters), pageable)
+        return bookRepository
+                .findAll(bookSpecificationBuilder.build(searchParameters), pageable)
                 .map(bookMapper::toDto);
+    }
+
+    @Override
+    public Page<BookWithoutCategoryIds> getCategoryBooks(Long categoryId, Pageable pageable) {
+        return bookRepository
+                .findAllByCategoriesId(categoryId, pageable)
+                .map(bookMapper::toDtoWithoutCategories);
     }
 }
